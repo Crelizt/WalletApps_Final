@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,7 +22,26 @@ public class UserServiceImpl implements IUserInterface {
 
     @Override
     public List<UserDTO> getListUser() {
-        return null;
+        List<UserDTO> value = new ArrayList<UserDTO>();
+        ModelMapper mapper = new ModelMapper();
+        // Get all user from database
+        List<UserEntity> users = userRepository.findAll();
+
+        //List<UserEntity> -> mapping ke List<UserDTO>
+        for(UserEntity userEntity : users){
+            value.add(mapper.map(userEntity, UserDTO.class));
+        }
+        return value;
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) {
+        UserEntity getUser = userRepository.findByUsername(username);
+        if (getUser == null)
+            return null;
+
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(getUser, UserDTO.class);
     }
 
     @Override
