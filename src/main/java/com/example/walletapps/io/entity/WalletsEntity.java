@@ -2,6 +2,7 @@ package com.example.walletapps.io.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "walletsTBL")
@@ -27,6 +28,9 @@ public class WalletsEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "walletsEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TransactionEntity> transactionEntity;
 
     public long getId() {
         return id;
@@ -74,5 +78,13 @@ public class WalletsEntity implements Serializable {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public List<TransactionEntity> getTransactionEntity() {
+        return transactionEntity;
+    }
+
+    public void setTransactionEntity(List<TransactionEntity> transactionEntity) {
+        this.transactionEntity = transactionEntity;
     }
 }
