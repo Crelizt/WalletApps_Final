@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<UserResponse> getUsers(){
-        List<UserResponse> value = new ArrayList<>();
+        List<UserResponse> value = new ArrayList<UserResponse>();
         ModelMapper mapper = new ModelMapper();
 
         List<UserDTO> users = userService.getListUser();
